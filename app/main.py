@@ -1,4 +1,6 @@
 from tkinter import *
+from db_csv import save_deck
+
 
 root = Tk()
 root.title('Save Decks')
@@ -13,9 +15,15 @@ def save(*args):
     c = deck_code.get()
     if not n or not c:
         message_input.configure(text='Error: The fields cannot be empty', fg='red')
-    else:
-        message_input.configure(text='Deck saved', fg='green')
+        return
 
+    try:
+        save_deck(name=n, code=c)
+        message_input.configure(text='Deck saved', fg='green')
+    except Exception as e:
+        print(e)
+        message_input.configure(text='Error: something went wrong.', fg='red')
+        
     print(n)
     print(c)
     deck_name.set('')
