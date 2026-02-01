@@ -12,3 +12,10 @@ dependencies = [
 build = [
     "pyinstaller>=6.18.0",
 ]
+dev = [
+    "pytest>=9.0.2",
+]
+
+
+[pytest]
+tmp_path_retention_policy = "failed"
