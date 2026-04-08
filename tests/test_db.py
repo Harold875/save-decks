@@ -1,5 +1,5 @@
 import pandas as pd
-from .db_csv import save_deck
+from app.db_csv import save_deck
 from datetime import datetime
 
 
