@@ -1,6 +1,7 @@
 import pandas as pd
 from app.db_csv import save_deck
 from datetime import datetime
+from app.codes_info.parallel_tcg import regions
 
 
 TEST_PATH = 'decks-data'
@@ -43,3 +44,15 @@ def test_data_saved(tmp_path):
     assert df['date'][0] == date_now
     # assert 0
 
+def test_save_deck_with_code_info(tmp_path):
+    p = tmp_path / TEST_PATH
+    f = p / TEST_NAME_FILE
+    
+    code = "CB-379,CB-240,3xCB-204"
+    save_deck(path=f, name=TEST_NAME, code=code)
+    
+    df = pd.read_csv(f)
+    print(df)
+    assert df['code'][0] == code
+    assert df['paragon'][0] == "Niamh, Wielder of Faith"
+    assert df['region'][0] == regions.shroud.value
