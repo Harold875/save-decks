@@ -1,5 +1,5 @@
 from tkinter import *
-from db_csv import save_deck
+from app.db_csv import save_deck
 
 
 root = Tk()
