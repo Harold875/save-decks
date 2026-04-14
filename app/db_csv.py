@@ -11,7 +11,6 @@ DEFAULT_PATH = Path().home() / '.save-deck/decks.csv'
 def save_deck(name:str, code:str, path: Path=DEFAULT_PATH):
     data = {
         "name": name.strip(),
-        "code": code.strip(),
         "date": datetime.now().strftime("%d/%m/%Y")
     }
     new_df = pd.DataFrame([data])
@@ -21,7 +20,11 @@ def save_deck(name:str, code:str, path: Path=DEFAULT_PATH):
     if info is not None:
         df_code = pd.DataFrame([info])
         new_df = pd.concat([new_df, df_code], axis=1)
-
+    
+    
+    # add code at the end of the dataframe
+    new_df['code'] = code.strip()
+    
     if not path.exists():
         # create directory is not exists
         if not path.parent.exists():
