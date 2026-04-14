@@ -44,6 +44,7 @@ def test_data_saved(tmp_path):
     assert df['date'][0] == date_now
     # assert 0
 
+
 def test_save_deck_with_code_info(tmp_path):
     p = tmp_path / TEST_PATH
     f = p / TEST_NAME_FILE
@@ -56,3 +57,23 @@ def test_save_deck_with_code_info(tmp_path):
     assert df['code'][0] == code
     assert df['paragon'][0] == "Niamh, Wielder of Faith"
     assert df['region'][0] == regions.shroud.value
+
+
+def test_save_multiple_decks(tmp_path):
+    p = tmp_path / TEST_PATH
+    f = p / TEST_NAME_FILE
+
+    code_1 = "CB-379,CB-240,3xCB-204"
+    code_2 = "CB-21,CB-517,3xCB-25"
+    save_deck(path=f, name="deck_01", code=code_1)
+    save_deck(path=f, name="deck_02", code=code_2)
+
+    df = pd.read_csv(f)
+
+    assert df['code'][0] == code_1
+    assert df['paragon'][0] == "Niamh, Wielder of Faith"
+    assert df['region'][0] == regions.shroud.value
+    
+    assert df['code'][1] == code_2
+    assert df['paragon'][1] == "Arak, Combat Overseer"
+    assert df['region'][1] == regions.augencore.value
