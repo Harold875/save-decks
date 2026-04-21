@@ -5,10 +5,14 @@ from datetime import datetime
 from app.codes_info.parallel_tcg import code_info
 
 
-DEFAULT_PATH = Path().home() / '.save-deck/decks.csv'
+DEFAULT_PATH = Path().home() / '.save-deck'
+
+DEFAULT_FILE_PATH = DEFAULT_PATH / 'decks.csv'
+
+
 
 # name, code, date
-def save_deck(name:str, code:str, path: Path=DEFAULT_PATH):
+def save_deck(name:str, code:str, path: Path=DEFAULT_FILE_PATH):
     data = {
         "name": name.strip(),
         "date": datetime.now().strftime("%d/%m/%Y")
