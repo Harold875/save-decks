@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import filedialog
 from app.db_csv import save_deck
 
 
@@ -48,6 +49,31 @@ btn_save.grid(row=2,column=0, columnspan=2, sticky='nswe', pady=10)
 
 message_input = Label(f_inputs, text='',)
 message_input.grid(row=3, columnspan=2, column=0, sticky='nswe')
+
+
+# Menus
+root.option_add('*tearOff', FALSE)
+
+menubar = Menu(root)
+root['menu'] = menubar
+
+menu_config = Menu(menubar)
+menu_about = Menu(menubar)
+menubar.add_cascade(menu=menu_config, label='Config')
+menubar.add_cascade(menu=menu_about, label='About')
+
+def change_path_file():
+    dirname = filedialog.askdirectory()
+    if dirname:
+        print(dirname)
+        print("cambiar ruta...")
+    else:
+        print('Empty...')
+    
+
+menu_config.add_command(label='Change save path', command=change_path_file)
+
+
 
 name_entry.focus()
 root.bind('<Return>', save)
