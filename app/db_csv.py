@@ -17,9 +17,15 @@ load_dotenv(dotenv_path=ENV_FILE_PATH)
 
 CUSTOM_PATH = os.getenv('CUSTOM_SAVE_PATH')
 
+# Use CUSTOM_PATH or DEFAULT_FILE_PATH
+if CUSTOM_PATH is not None:
+    deck_save_path = Path(CUSTOM_PATH)
+else:
+    deck_save_path = DEFAULT_FILE_PATH
+
 
 # name, code, date
-def save_deck(name:str, code:str, path: Path=DEFAULT_FILE_PATH):
+def save_deck(name:str, code:str, path: Path=deck_save_path):
     data = {
         "name": name.strip(),
         "date": datetime.now().strftime("%d/%m/%Y")
