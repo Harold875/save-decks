@@ -2,12 +2,17 @@ import pandas as pd
 from app.db_csv import save_deck
 from datetime import datetime
 from app.codes_info.parallel_tcg import regions
+from app.db_csv import update_custom_path
 
 
 TEST_PATH = 'decks-data'
 TEST_NAME_FILE = 'decks.csv'
 TEST_NAME = 'deck-prueba-01'
 TEST_CODE = 'abc-123-123-abc'
+
+# Config test env
+TEST_CONFIG = 'config'
+TEST_ENV = '.env'
 
 
 def test_create_directory(tmp_path):
@@ -77,3 +82,24 @@ def test_save_multiple_decks(tmp_path):
     assert df['code'][1] == code_2
     assert df['paragon'][1] == "Arak, Combat Overseer"
     assert df['region'][1] == regions.augencore.value
+
+
+def test_update_custom_path(tmp_path):
+    from dotenv import get_key
+    
+    p = tmp_path / TEST_PATH
+    path_env = p / TEST_CONFIG / TEST_ENV
+    
+    new_path = str(tmp_path / 'custom')
+    
+    print(p, p.exists())
+    print(path_env)
+    
+    update_custom_path(new_path, path_env)
+
+    custom_path = get_key(dotenv_path=path_env, key_to_get="CUSTOM_SAVE_PATH")
+    
+    assert path_env.exists() == True
+    assert custom_path != None
+    assert custom_path == new_path
+
