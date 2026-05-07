@@ -92,7 +92,8 @@ def update_custom_path(new_path: str, path: Path=ENV_FILE_PATH):
         # create file.
         path.touch()
     
-    set_key(dotenv_path=path, key_to_set='CUSTOM_SAVE_PATH', value_to_set=new_path)
+    p = Path(new_path) / "decks.csv"
+    set_key(dotenv_path=path, key_to_set='CUSTOM_SAVE_PATH', value_to_set=str(p))
     print('Enviroment Variable changed')
     print(CUSTOM_PATH)
 
