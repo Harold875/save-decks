@@ -74,6 +74,8 @@ def update_custom_path(new_path: str, path: Path=ENV_FILE_PATH):
             Debe ser la ruta del archivo.
     
     """
+    if not isinstance(new_path, str):
+        raise TypeError("new_path is not a string. Must be a string.")
     
     def create_directory_is_not_exist(path:Path):
         if path.exists():

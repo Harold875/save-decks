@@ -1,4 +1,5 @@
 import pandas as pd
+import pytest
 from app.db_csv import save_deck
 from datetime import datetime
 from app.codes_info.parallel_tcg import regions
@@ -102,4 +103,11 @@ def test_update_custom_path(tmp_path):
     assert path_env.exists() == True
     assert custom_path != None
     assert custom_path == new_path
+
+
+def test_update_custom_path_value_error_str(tmp_path):
+    p = tmp_path / TEST_PATH
+    path_env = p / TEST_CONFIG / TEST_ENV
+    with pytest.raises(TypeError):
+        update_custom_path(10, path_env)
 
