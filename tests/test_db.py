@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pandas as pd
 import pytest
 from app.db_csv import save_deck
@@ -91,18 +93,19 @@ def test_update_custom_path(tmp_path):
     p = tmp_path / TEST_PATH
     path_env = p / TEST_CONFIG / TEST_ENV
     
-    new_path = str(tmp_path / 'custom')
+    new_path = tmp_path / 'custom'
     
     print(p, p.exists())
     print(path_env)
     
-    update_custom_path(new_path, path_env)
+    update_custom_path(str(new_path), path_env)
 
     custom_path = get_key(dotenv_path=path_env, key_to_get="CUSTOM_SAVE_PATH")
     
     assert path_env.exists() == True
     assert custom_path != None
-    assert custom_path == new_path
+    assert Path(custom_path).parent == new_path
+    assert custom_path == str(new_path / "decks.csv")
 
 
 def test_update_custom_path_value_error_str(tmp_path):
