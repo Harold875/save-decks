@@ -74,6 +74,8 @@ def update_custom_path(new_path: str, path: Path=ENV_FILE_PATH):
             Debe ser la ruta del archivo.
     
     """
+    global deck_save_path
+    
     if not isinstance(new_path, str):
         raise TypeError("new_path is not a string. Must be a string.")
     
@@ -94,8 +96,9 @@ def update_custom_path(new_path: str, path: Path=ENV_FILE_PATH):
     
     p = Path(new_path) / "decks.csv"
     set_key(dotenv_path=path, key_to_set='CUSTOM_SAVE_PATH', value_to_set=str(p))
+    deck_save_path = p
     print('Enviroment Variable changed')
-    print(CUSTOM_PATH)
+    print(deck_save_path)
 
 
 if __name__ == '__main__':
