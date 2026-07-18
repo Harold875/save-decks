@@ -25,7 +25,12 @@ else:
 
 
 # name, code, date
-def save_deck(name:str, code:str, path: Path=deck_save_path):
+def save_deck(name:str, code:str, path: Path | None=None):
+
+    if path is None:
+        path = deck_save_path
+
+
     data = {
         "name": name.strip(),
         "date": datetime.now().strftime("%d/%m/%Y")
