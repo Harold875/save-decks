@@ -37,6 +37,7 @@ def save(*args):
     print(c)
     deck_name.set('')
     deck_code.set('')
+    name_entry.focus()
     
 
 deck_name = StringVar()
