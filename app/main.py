@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import filedialog
 from app.db_csv import save_deck
-
+from app.db_csv import update_custom_path
 
 root = Tk()
 root.title('Save Decks')
@@ -66,6 +66,7 @@ def change_path_file():
     dirname = filedialog.askdirectory()
     if dirname:
         print(dirname)
+        update_custom_path(dirname)
         print("cambiar ruta...")
     else:
         print('Empty...')
