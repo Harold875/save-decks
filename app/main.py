@@ -10,6 +10,8 @@ root.title('Save Decks')
 f_inputs = Frame(root, pady=4, padx=25)
 f_inputs.pack()
 
+VERSION = "0.3.0"
+
 
 def save(*args):
     n = deck_name.get()
@@ -60,7 +62,30 @@ root['menu'] = menubar
 menu_config = Menu(menubar)
 menu_about = Menu(menubar)
 menubar.add_cascade(menu=menu_config, label='Config')
-menubar.add_cascade(menu=menu_about, label='About')
+
+
+def interface_about():
+    def open_web():
+        import webbrowser
+        webbrowser.open('https://github.com/Harold875/save-decks')
+    
+    t = Toplevel()
+    f = Frame(t, pady=5, padx=25)
+    f.grid()
+    
+    l1 = Label(f, text=f'Version: {VERSION}')
+    # l2 = Label(f, text='Github: Harold875')
+    
+    l1.grid(row=0, column=0, pady=5, sticky="w")
+    # l2.grid(row=1, column=0, pady=5, sticky="w")
+    
+    print("this is info")
+    btn_web = Button(f, text='Repository link', command=open_web)
+    btn_web.grid(row=2, column=0, pady=5, sticky="nswe")
+
+
+menubar.add_command(label='About', command=interface_about)
+
 
 def change_path_file():
     dirname = filedialog.askdirectory()
