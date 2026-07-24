@@ -1,7 +1,10 @@
+import webbrowser
 from tkinter import *
 from tkinter import filedialog
+
 from app.db_csv import save_deck
 from app.db_csv import update_custom_path
+
 
 root = Tk()
 root.title('Save Decks')
@@ -66,22 +69,28 @@ menubar.add_cascade(menu=menu_config, label='Config')
 
 def interface_about():
     def open_web():
-        import webbrowser
         webbrowser.open('https://github.com/Harold875/save-decks')
     
     t = Toplevel()
-    f = Frame(t, pady=5, padx=25)
-    f.grid()
+    t.title("About")
+    t.resizable(False, False)
     
-    l1 = Label(f, text=f'Version: {VERSION}')
-    # l2 = Label(f, text='Github: Harold875')
-    
-    l1.grid(row=0, column=0, pady=5, sticky="w")
-    # l2.grid(row=1, column=0, pady=5, sticky="w")
-    
-    print("this is info")
-    btn_web = Button(f, text='Repository link', command=open_web)
-    btn_web.grid(row=2, column=0, pady=5, sticky="nswe")
+    f = Frame(t, padx=30, pady=20)
+    f.grid(row=0, column=0, sticky="nsew")
+    f.columnconfigure(0, weight=1)
+
+    lbl_version = Label(f, text=f"Version {VERSION}", font=("TkDefaultFont", 10))
+    lbl_version.grid(row=0, column=0, pady=(0, 15), sticky="ew")
+
+    btn_web = Button(
+        f,
+        text="View on GitHub",
+        command=open_web,
+        cursor="hand2",
+        padx=10,
+        pady=3
+    )
+    btn_web.grid(row=1, column=0, sticky="ew")
 
 
 menubar.add_command(label='About', command=interface_about)
