@@ -4,6 +4,7 @@ from tkinter import filedialog
 
 from app.db_csv import save_deck
 from app.db_csv import update_custom_path
+from app.project_version import get_version
 
 
 root = Tk()
@@ -13,7 +14,8 @@ root.title('Save Decks')
 f_inputs = Frame(root, pady=4, padx=25)
 f_inputs.pack()
 
-VERSION = "0.3.0"
+# Get version of the project
+VERSION = get_version()
 
 
 def save(*args):
