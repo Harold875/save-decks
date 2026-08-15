@@ -1,5 +1,11 @@
+import webbrowser
 from tkinter import *
+from tkinter import filedialog
+
 from app.db_csv import save_deck
+from app.db_csv import update_custom_path
+from app.project_version import get_version
+from app.db_csv import get_deck_save_path
 
 
 root = Tk()
@@ -8,6 +14,9 @@ root.title('Save Decks')
 
 f_inputs = Frame(root, pady=4, padx=25)
 f_inputs.pack()
+
+# Get version of the project
+VERSION = get_version()
 
 
 def save(*args):
@@ -48,6 +57,85 @@ btn_save.grid(row=2,column=0, columnspan=2, sticky='nswe', pady=10)
 
 message_input = Label(f_inputs, text='',)
 message_input.grid(row=3, columnspan=2, column=0, sticky='nswe')
+
+
+# Menus
+root.option_add('*tearOff', FALSE)
+
+menubar = Menu(root)
+root['menu'] = menubar
+
+menu_config = Menu(menubar)
+menu_about = Menu(menubar)
+menubar.add_cascade(menu=menu_config, label='Config')
+
+
+def interface_about():
+    def open_web():
+        webbrowser.open('https://github.com/Harold875/save-decks')
+    
+    t = Toplevel()
+    t.title("About")
+    t.resizable(False, False)
+    
+    f = Frame(t, padx=30, pady=20)
+    f.grid(row=0, column=0, sticky="nsew")
+    f.columnconfigure(0, weight=1)
+
+    lbl_version = Label(f, text=f"Version {VERSION}", font=("TkDefaultFont", 10))
+    lbl_version.grid(row=0, column=0, pady=(0, 15), sticky="ew")
+
+    btn_web = Button(
+        f,
+        text="View on GitHub",
+        command=open_web,
+        cursor="hand2",
+        padx=10,
+        pady=3
+    )
+    btn_web.grid(row=1, column=0, sticky="ew")
+
+
+menubar.add_command(label='About', command=interface_about)
+
+
+def change_path_file():
+    dirname = filedialog.askdirectory()
+    if dirname:
+        print(dirname)
+        update_custom_path(dirname)
+        print("cambiar ruta...")
+    else:
+        print('Empty...')
+    
+
+def setting_info():
+    global deck_save_path
+    t = Toplevel()
+    t.title("Setting Info")
+    t.resizable(False, False)
+    
+    f = Frame(t, padx=30, pady=20)
+    f.grid(row=0, column=0, sticky="nsew")
+    f.columnconfigure(0, weight=1)
+
+    # Añadido "bold" al título y anchor="w" para alinear a la izquierda
+    l1 = Label(f, text="Info:", font=("TkDefaultFont", 12, "bold"), anchor="w")
+    l2 = Label(f, text="File Save Path:", font=("TkDefaultFont", 11), anchor="w")
+
+    a = get_deck_save_path()
+    
+    l3 = Label(f, text=str(a), font=("TkFixedFont", 10), anchor="w", justify="left", wraplength=600)
+    # grid
+    l1.grid(row=0, column=0, pady=(0, 15), sticky="ew")
+    l2.grid(row=1, column=0, pady=(0, 5), sticky="ew")
+    l3.grid(row=2, column=0, pady=(0, 15), sticky="ew")
+    
+
+menu_config.add_command(label='Change save path', command=change_path_file)
+menu_config.add_command(label='Settings Info', command=setting_info)
+
+
 
 name_entry.focus()
 root.bind('<Return>', save)
