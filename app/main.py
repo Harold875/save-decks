@@ -5,6 +5,7 @@ from tkinter import filedialog
 from app.db_csv import save_deck
 from app.db_csv import update_custom_path
 from app.project_version import get_version
+from app.db_csv import get_deck_save_path
 
 
 root = Tk()
@@ -108,7 +109,31 @@ def change_path_file():
         print('Empty...')
     
 
+def setting_info():
+    global deck_save_path
+    t = Toplevel()
+    t.title("Setting Info")
+    t.resizable(False, False)
+    
+    f = Frame(t, padx=30, pady=20)
+    f.grid(row=0, column=0, sticky="nsew")
+    f.columnconfigure(0, weight=1)
+
+    # Añadido "bold" al título y anchor="w" para alinear a la izquierda
+    l1 = Label(f, text="Info:", font=("TkDefaultFont", 12, "bold"), anchor="w")
+    l2 = Label(f, text="File Save Path:", font=("TkDefaultFont", 11), anchor="w")
+
+    a = get_deck_save_path()
+    
+    l3 = Label(f, text=str(a), font=("TkFixedFont", 10), anchor="w", justify="left", wraplength=600)
+    # grid
+    l1.grid(row=0, column=0, pady=(0, 15), sticky="ew")
+    l2.grid(row=1, column=0, pady=(0, 5), sticky="ew")
+    l3.grid(row=2, column=0, pady=(0, 15), sticky="ew")
+    
+
 menu_config.add_command(label='Change save path', command=change_path_file)
+menu_config.add_command(label='Settings Info', command=setting_info)
 
 
 

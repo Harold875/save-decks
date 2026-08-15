@@ -106,6 +106,10 @@ def update_custom_path(new_path: str, path: Path=ENV_FILE_PATH):
     print(deck_save_path)
 
 
+def get_deck_save_path():
+    global deck_save_path
+    return deck_save_path
+
 if __name__ == '__main__':
     # test
     save_deck('a', 'b')
